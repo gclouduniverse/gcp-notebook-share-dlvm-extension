@@ -23,18 +23,7 @@ class ShareNbHandler(APIHandler):
 
     @gen.coroutine
     def post(self):
-        project_name = self.execute_shell(GET_PROJECT_NAME_COMMAND)
-        bucket_name = GCS_BUCKET_NAME_TEMPLATE.format(project_name)
-        self.execute_shell(CREATE_BUCKET_COMMAND.format(bucket_name))
-        instance_name = self.execute_shell(GET_INSTANCE_NAME_COMMAND)
-
-        path = json.loads(self.request.body.decode('utf-8'))
-        self.execute_shell(PREPARE_TMP_DIR_COMMAND)
-        self.execute_shell(COPY_NB_TO_TMP_DIR_COMMAND.format(path))
-        self.execute_shell(NBCONVERT_COMMAND)
-        result_gcs_path = RESULT_GCS_PATH.format(bucket=bucket_name, instance=instance_name, nb=path.split("/")[-1], id=str(int(round(time.time() * 1000))))
-        self.execute_shell(UPLOAD_COMMDA.format(result_gcs_path))
-        return self.finish(result_gcs_path)
+        return self.finish("{'sharingLink':'link1', 'permissionsLink': 'link2'}")
 
     def execute_shell(self, command):
         p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
@@ -51,6 +40,6 @@ def _jupyter_server_extension_paths():
 def load_jupyter_server_extension(nb_server_app):
     web_app = nb_server_app.web_app
     base_url = web_app.settings['base_url']
-    endpoint = url_path_join(base_url, 'share_url')
+    endpoint = url_path_join(base_url, 'share_nb')
     handlers = [(endpoint, ShareNbHandler)]
     web_app.add_handlers('.*$', handlers)

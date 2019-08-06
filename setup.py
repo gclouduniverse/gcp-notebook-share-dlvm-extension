@@ -1,5 +1,5 @@
 """
-Setup module for the jupyterlab_nova proxy extension
+Setup module for the share proxy extension
 """
 import setuptools
 from setupbase import (
@@ -8,7 +8,7 @@ from setupbase import (
 
 data_files_spec = [
     ('etc/jupyter/jupyter_notebook_config.d',
-     'jupyter-config/jupyter_notebook_config.d', 'jupyterlab_nova.json'),
+     'jupyter-config/jupyter_notebook_config.d', 'jupyterlab_share.json'),
 ]
 
 requires = [line.strip() for line in open('requirements.txt').readlines() if not line.startswith("#")]
@@ -16,7 +16,7 @@ requires = [line.strip() for line in open('requirements.txt').readlines() if not
 cmdclass = create_cmdclass(data_files_spec=data_files_spec)
 
 setup_dict = dict(
-    name='jupyterlab_nova',
+    name='share_nb',
     description='Plugin that allows to submit Notebooks for background training.',
     packages=find_packages(),
     cmdclass=cmdclass,
@@ -38,6 +38,6 @@ setup_dict = dict(
 )
 
 setuptools.setup(
-    version="0.3.0",
+    version="0.1.0",
     **setup_dict
 )

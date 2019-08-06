@@ -1,5 +1,5 @@
 {
-  "name": "nova",
+  "name": "share_nb",
   "version": "0.3.0",
   "description": "Jupyter Notebook submission to GCP",
   "keywords": [
@@ -58,7 +58,7 @@
           "pip"
         ],
         "base": {
-          "name": "jupyterlab_nova"
+          "name": "share_nb"
         }
       }
     }
