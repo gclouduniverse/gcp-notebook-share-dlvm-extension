@@ -1,4 +1,5 @@
 import re, json, copy, uuid, yaml, subprocess, time
+import json
 
 import tornado.gen as gen
 
@@ -23,7 +24,11 @@ class ShareNbHandler(APIHandler):
 
     @gen.coroutine
     def post(self):
-        return self.finish("{'sharingLink':'link1', 'permissionsLink': 'link2'}")
+        links = {
+            "sharingLink": "link1",
+            "permissionsLink": "link2"
+        }
+        return self.finish(json.dumps(links))
 
     def execute_shell(self, command):
         p = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)

@@ -8,7 +8,7 @@ from setupbase import (
 
 data_files_spec = [
     ('etc/jupyter/jupyter_notebook_config.d',
-     'jupyter-config/jupyter_notebook_config.d', 'jupyterlab_share.json'),
+     'jupyter-config/jupyter_notebook_config.d', 'share_nb.json'),
 ]
 
 requires = [line.strip() for line in open('requirements.txt').readlines() if not line.startswith("#")]
