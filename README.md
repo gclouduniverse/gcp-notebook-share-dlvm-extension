@@ -1,36 +1,15 @@
-# Share
-
-Jupyter Notebook submission to GCP
-
+# Extensions For Sharing Notebook
 
 ## Prerequisites
 
-* JupyterLab
+* Cloud AI Deep Learning VM
+* AI Platform Notebook Instance
 
 ## Installation
 
-This should work on Google Cloud Deep Learning VM M19+.
-
 ```bash
-sudo pip3 install .
-sudo service jupyter restart
-sudo jupyter labextension install
+INSTANCE_NAME=... # Namve of either AI Platform Notebook instance or Cloud AI Deep Learning VM
+git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git
+cd gcp-notebook-share-dlvm-extension
+./deploy.sh "${INSTANCE_NAME}"
 ```
-
-## Development
-
-For a development install (requires npm version 4 or later), do the following in the repository directory:
-
-```bash
-npm install   # install npm package dependencies
-npm run build 
-sudo jupyter labextension install  # install the current directory as an extension
-```
-
-To rebuild the package and the JupyterLab app:
-
-```bash
-npm run build
-jupyter lab build
-```
-

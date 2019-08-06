@@ -36,7 +36,6 @@ class ShareNbHandler(APIHandler):
         p_status = p.wait()
         return output.decode('ascii').replace("\n", "")
 
-
 def _jupyter_server_extension_paths():
     return [{
         'module': 'share_nb'

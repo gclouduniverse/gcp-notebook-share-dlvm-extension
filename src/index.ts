@@ -1,3 +1,5 @@
+import '../style/index.css'
+
 import { URLExt } from '@jupyterlab/coreutils';
 
 import {
@@ -13,7 +15,7 @@ import {
 } from '@phosphor/disposable';
 
 import {
-  JupyterLab, JupyterLabPlugin, ILayoutRestorer
+  JupyterLab, JupyterLabPlugin
 } from '@jupyterlab/application';
 
 import {
@@ -34,8 +36,6 @@ import {
 
 import { ServerConnection } from '@jupyterlab/services';
 
-import { JobsWidget } from './jobs';
-
 /**
  * The plugin registration information.
  */
@@ -43,13 +43,6 @@ const buttonPlugin: JupyterLabPlugin<void> = {
   activate: activateButton,
   id: 'share:button',
   autoStart: true,
-};
-
-const jobsPlugin: JupyterLabPlugin<void> = {
-  activate: activateJobs,
-  id: 'share:jobs',
-  autoStart: true,
-  requires: [ILayoutRestorer],
 };
 
 import { style } from 'typestyle'
@@ -123,27 +116,6 @@ function activateButton(  app: JupyterLab) {
   app.docRegistry.addWidgetExtension('Notebook', new ButtonExtension());
 }
 
-/**
- * Activate the extension.
- */
-function activateJobs(
-  app: JupyterLab,
-  restorer: ILayoutRestorer
-): void {
-  let sidePanel = new JobsWidget();
-
-  sidePanel.id = 'jp-share-jobs'
-  sidePanel.title.iconClass = 'jp-FolderIcon jp-SideBar-tabIcon';
-  sidePanel.title.caption = 'Background Jobs';
-
-  
-  if (restorer) {
-    restorer.add(sidePanel, 'background-jobs');
-  }
-
-  app.shell.addToLeftArea(sidePanel, {rank: 453} );
-};
-
 class ShareNotebookResultsForm extends Widget {
 
     /**
@@ -155,11 +127,15 @@ class ShareNotebookResultsForm extends Widget {
 
     private static createFormNode(sharingLink: string, permissionsLink: string): HTMLElement {
         const node = document.createElement('div');
-        const sharingText = document.createElement('span');
-        const permissionsText = document.createElement('span');
+        // const sharingText = document.createElement('span');
+        // const permissionsText = document.createElement('span');
+        const sharingText = document.createElement('a');
+        const permissionsText = document.createElement('a');
 
-        sharingText.textContent = 'Link to the Notebook: ' + sharingLink;
-        permissionsText.textContent = 'Adjust access permission for the link: ' + permissionsLink;
+        sharingText.textContent = 'Link to the Notebook: ';
+        sharingText.href = sharingLink;
+        permissionsText.textContent = 'Adjust access permission for the link: ';
+        permissionsText.href = permissionsLink;
         node.className = 'jp-RedirectForm';
 
         node.appendChild(sharingText);
@@ -169,9 +145,7 @@ class ShareNotebookResultsForm extends Widget {
     }
 }
 
-
 /**
  * Export the plugin as default.
  */
-export default [buttonPlugin, jobsPlugin];
-
+export default [buttonPlugin];

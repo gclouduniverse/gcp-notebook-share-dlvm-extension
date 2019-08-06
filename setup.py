@@ -17,14 +17,14 @@ cmdclass = create_cmdclass(data_files_spec=data_files_spec)
 
 setup_dict = dict(
     name='share_nb',
-    description='Plugin that allows to submit Notebooks for background training.',
+    description='Plugin that allows to share Notebooks.',
     packages=find_packages(),
     cmdclass=cmdclass,
     author          = 'Viacheslav Kovalevskyi',
     author_email    = 'viacheslav@kovalevskyi.com',
     license         = 'MIT',
     platforms       = "Linux, Mac OS X, Windows",
-    keywords        = ['Jupyter', 'JupyterLab', 'GitHub'],
+    keywords        = ['Jupyter', 'JupyterLab', 'GitHub', 'GCP'],
     python_requires = '>=3.5',
     classifiers     = [
         'Intended Audience :: Developers',
