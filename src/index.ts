@@ -1,58 +1,57 @@
-import '../style/index.css'
+import'../style/index.css'
 
-import { URLExt } from '@jupyterlab/coreutils';
-
-import {
-    Widget
-} from "@phosphor/widgets";
+import {URLExt}from '@jupyterlab/coreutils';
 
 import {
-    Dialog
-} from "@jupyterlab/apputils";
+Widget
+}from "@phosphor/widgets";
 
 import {
-  IDisposable, DisposableDelegate
-} from '@phosphor/disposable';
+Dialog
+}from "@jupyterlab/apputils";
 
 import {
-  JupyterLab, JupyterLabPlugin
-} from '@jupyterlab/application';
+IDisposable, DisposableDelegate
+}from '@phosphor/disposable';
 
 import {
-  ToolbarButton
-} from '@jupyterlab/apputils';
+JupyterLab, JupyterLabPlugin
+}from '@jupyterlab/application';
 
 import {
-  DocumentRegistry
-} from '@jupyterlab/docregistry';
+ToolbarButton
+}from '@jupyterlab/apputils';
 
 import {
-  NotebookPanel, INotebookModel
-} from '@jupyterlab/notebook';
+DocumentRegistry
+}from '@jupyterlab/docregistry';
 
 import {
-  PageConfig 
-} from '@jupyterlab/coreutils';
+NotebookPanel, INotebookModel
+}from '@jupyterlab/notebook';
 
-import { ServerConnection } from '@jupyterlab/services';
+import {
+PageConfig
+}from '@jupyterlab/coreutils';
+
+import {ServerConnection}from '@jupyterlab/services';
 
 /**
- * The plugin registration information.
- */
-const buttonPlugin: JupyterLabPlugin<void> = {
-  activate: activateButton,
-  id: 'share:button',
-  autoStart: true,
+* The plugin registration information.
+*/
+const buttonPlugin: JupyterLabPlugin< void> = {
+activate: activateButton,
+id: 'share:button',
+autoStart: true,
 };
 
-import { style } from 'typestyle'
+import {style}from 'typestyle'
 
 export const iconStyle = style({
-    backgroundImage: 'var(--jp-share-icon-train)',
+backgroundImage: 'var(--jp-share-icon-train)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '16px'
 })
-
 
 /**
  * A notebook widget extension that adds a button to the toolbar.
@@ -83,7 +82,6 @@ class ButtonExtension implements DocumentRegistry.IWidgetExtension<NotebookPanel
 		});
     };
 	
-	
 	let callback = () => {		
       let notebook_path = panel.context.contentsModel.path;
       let full_notebook_path = PageConfig.getOption('serverRoot') + "/" + notebook_path
@@ -97,9 +95,9 @@ class ButtonExtension implements DocumentRegistry.IWidgetExtension<NotebookPanel
           {
             "notebook_path": full_notebook_path
           }
-        )
-      };
-      ServerConnection.makeRequest(fullUrl, fullRequest, settings).then(response => {
+)
+};
+ServerConnection.makeRequest(fullUrl, fullRequest, settings).then(response => {
 
         response.text().then(function processText(links: string) {
           // console.log('******' + links);
