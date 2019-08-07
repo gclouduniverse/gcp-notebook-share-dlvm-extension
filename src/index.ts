@@ -64,7 +64,27 @@ class ButtonExtension implements DocumentRegistry.IWidgetExtension<NotebookPanel
    */
   createNew(panel: NotebookPanel, context: DocumentRegistry.IContext<INotebookModel>): IDisposable {
 
-    let callback = () => {
+    let calldialog = () => {	    
+       const firstDialog = new Dialog({
+            title: 'Share Notebook',
+            body: '',
+            buttons: [
+				Dialog.cancelButton(),
+				Dialog.createButton({label: 'Private'}),
+                Dialog.createButton({label: 'Public'})
+            ]
+          });
+       const result = firstDialog.launch();
+	   result.then(result => {
+		   console.log(result.value);
+			if (typeof result.value != 'undefined') {
+				callback();
+			}
+		});
+    };
+	
+	
+	let callback = () => {		
       let notebook_path = panel.context.contentsModel.path;
       let full_notebook_path = PageConfig.getOption('serverRoot') + "/" + notebook_path
           
@@ -87,7 +107,7 @@ class ButtonExtension implements DocumentRegistry.IWidgetExtension<NotebookPanel
           let sharingLink = linksObj["sharingLink"]
           let permissionsLink = linksObj["permissionsLink"]
           const dialog = new Dialog({
-            title: 'Share notebook',
+            title: 'Share Notebook',
             body: new ShareNotebookResultsForm(sharingLink, permissionsLink),
             buttons: [
                 Dialog.okButton()
@@ -101,7 +121,8 @@ class ButtonExtension implements DocumentRegistry.IWidgetExtension<NotebookPanel
     let button = new ToolbarButton({
       className: 'backgroundTraining',
       iconClassName: iconStyle + ' jp-Icon jp-Icon-16 jp-ToolbarButtonComponent-icon',
-      onClick: callback,
+      //onClick: callback,
+	  onClick: calldialog,
       tooltip: 'Share notebook state.'
     });
     panel.toolbar.insertItem(0, 'trainOnBackground', button);
@@ -132,7 +153,7 @@ class ShareNotebookResultsForm extends Widget {
         const sharingText = document.createElement('a');
         const permissionsText = document.createElement('a');
 
-        sharingText.textContent = 'Link to the Notebook: ';
+        sharingText.textContent = 'Link to the notebook: ';
         sharingText.href = sharingLink;
         permissionsText.textContent = 'Adjust access permission for the link: ';
         permissionsText.href = permissionsLink;
