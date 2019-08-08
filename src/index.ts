@@ -89,7 +89,6 @@ export const iconStyle = style({
 
                 let settings = ServerConnection.makeSettings();
             let fullUrl = URLExt.join(settings.baseUrl, "share_nb");
-
             const firstDialog = new Dialog({
                     title: 'Share Notebook',
                     body: 'What type of link do you want?',
@@ -103,6 +102,7 @@ export const iconStyle = style({
                         })
                     ]
                 });
+
             const result = firstDialog.launch();
             result.then(result => {
                 if (result.button.label == 'Private') {
@@ -115,7 +115,6 @@ export const iconStyle = style({
                     };
 
                     ServerConnection.makeRequest(fullUrl, fullRequest, settings).then(response => {
-
                         response.text().then(function processText(links: string) {
                             let linksObj = JSON.parse(links);
                             let sharingLink = linksObj["sharingLink"]
@@ -130,7 +129,6 @@ export const iconStyle = style({
                             dialog.launch();
                         })
                     });
-
                 }
 
                 if (result.button.label == 'Public') {
@@ -143,7 +141,6 @@ export const iconStyle = style({
                     };
 
                     ServerConnection.makeRequest(fullUrl, fullRequest, settings).then(response => {
-
                         response.text().then(function processText(links: string) {
                             let linksObj = JSON.parse(links);
                             let sharingLink = linksObj["sharingLink"]
@@ -158,13 +155,9 @@ export const iconStyle = style({
                             dialog.launch();
                         })
                     });
-
                 }
-
             });
-
         };
-
         let button = new ToolbarButton({
                 className: 'backgroundTraining',
                 iconClassName: iconStyle + ' jp-Icon jp-Icon-16 jp-ToolbarButtonComponent-icon',
@@ -197,20 +190,19 @@ class ShareNotebookResultsForm extends Widget {
     private static createFormNode(sharingLink: string, permissionsLink: string): HTMLElement {
         const node = document.createElement('div');
         const br = document.createElement('br');
-        // const permissionsText = document.createElement('span');
         const sharingText = document.createElement('a');
         const permissionsText = document.createElement('a');
 
         sharingText.textContent = 'Link to the notebook';
         sharingText.href = sharingLink;
-		sharingText.target = '_blank';		
+        sharingText.target = '_blank';
         permissionsText.textContent = 'Adjust access permission for the link';
         permissionsText.href = permissionsLink;
-		permissionsText.target = '_blank';
+        permissionsText.target = '_blank';
         node.className = 'jp-RedirectForm';
 
         node.appendChild(sharingText);
-		node.appendChild(br);
+        node.appendChild(br);
         node.appendChild(permissionsText);
 
         return node;
@@ -234,7 +226,7 @@ class ShareNotebookPublicResultsForm extends Widget {
 
         sharingText.textContent = 'Link to the notebook';
         sharingText.href = sharingLink;
-		sharingText.target = '_blank';
+        sharingText.target = '_blank';
         node.className = 'jp-RedirectForm';
         node.appendChild(sharingText);
 
