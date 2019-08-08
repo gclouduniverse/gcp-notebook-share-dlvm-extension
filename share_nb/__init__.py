@@ -34,10 +34,19 @@ class ShareNbHandler(APIHandler):
 
         self.execute_shell('gsutil mb ' + 'gs://' + self.get_bucket_name()) 
 
+        bucket_name = self.get_bucket_name()
+        instance_name = self.get_instance_name()
+        full_gcs_path = bucket_name + '/' + instance_name + '/' + html_path
+        self.execute_shell('gsutil cp ' + html_path + ' ' +  'gs://' + full_gcs_path) 
+
+        sharing_link = 'https://storage.cloud.google.com/' + full_gcs_path 
+
+        permission_link = 'https://console.cloud.google.com/storage/browser/_details/' + full_gcs_path 
+
 
         links = {
-            "sharingLink": self.get_bucket_name(),
-            "permissionsLink": self.get_instance_name()
+            "sharingLink": sharing_link,
+            "permissionsLink": permission_link
         }
         return self.finish(json.dumps(links))
 
