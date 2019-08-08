@@ -93,7 +93,7 @@ class ButtonExtension implements DocumentRegistry.IWidgetExtension<NotebookPanel
         method: 'POST',
         body: JSON.stringify(
           {
-            "notebook_path": full_notebook_path
+            "notebook_path": full_notebook_path, "public": true
           }
 )
 };

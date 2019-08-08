@@ -10,23 +10,34 @@ __version__ = '0.1.0'
 
 GET_PROJECT_NAME_COMMAND = "curl http://metadata.google.internal/computeMetadata/v1/project/project-id -H \"Metadata-Flavor: Google\""
 GET_INSTANCE_NAME_COMMAND = "curl http://metadata.google.internal/computeMetadata/v1/instance/name -H \"Metadata-Flavor: Google\""
-CREATE_BUCKET_COMMAND = "gsutil mb gs://{}"
-PREPARE_TMP_DIR_COMMAND = "rm -rf /tmp/nbs && mkdir /tmp/nbs"
-COPY_NB_TO_TMP_DIR_COMMAND = "cp {} /tmp/nbs"
-NBCONVERT_COMMAND = "cd /tmp/nbs && jupyter nbconvert --to html `find /tmp/nbs | grep ipynb`"
-UPLOAD_COMMDA = "gsutil cp `find /tmp/nbs | grep htmp` {}"
-
-GCS_BUCKET_NAME_TEMPLATE = "{}-shared-notebooks"
-RESULT_GCS_PATH = "{bucket}/{instance}/{nb}/{id}/"
 
 
 class ShareNbHandler(APIHandler):
 
+    def get_bucket_name(self):
+        project_name = self.execute_shell(GET_PROJECT_NAME_COMMAND)
+        bucket_name = project_name + '-notebooks'
+        return bucket_name
+
+    def get_instance_name(self):
+        return self.execute_shell(GET_INSTANCE_NAME_COMMAND)
+
     @gen.coroutine
     def post(self):
+        data = json.loads(self.request.body.decode('utf-8'))
+        path = data["notebook_path"]
+        public = data["public"]
+
+        self.execute_shell('jupyter nbconvert --to html ' + path) 
+       
+        html_path = path[0:len(path)-5] + 'html'
+
+        self.execute_shell('gsutil mb ' + 'gs://' + self.get_bucket_name()) 
+
+
         links = {
-            "sharingLink": "link1",
-            "permissionsLink": "link2"
+            "sharingLink": self.get_bucket_name(),
+            "permissionsLink": self.get_instance_name()
         }
         return self.finish(json.dumps(links))
 
