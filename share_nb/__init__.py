@@ -43,6 +43,8 @@ class ShareNbHandler(APIHandler):
 
         permission_link = 'https://console.cloud.google.com/storage/browser/_details/' + full_gcs_path 
 
+        if public:
+            self.execute_shell('gsutil acl ch -u AllUsers:R gs://' + full_gcs_path)
 
         links = {
             "sharingLink": sharing_link,
