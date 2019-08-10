@@ -1,4 +1,4 @@
-import re, json, copy, uuid, yaml, subprocess, time
+import re, json, copy, uuid, yaml, subprocess, time, os.path
 import json
 
 import tornado.gen as gen
@@ -29,13 +29,11 @@ class ShareNbHandler(APIHandler):
         # path = "\"" + path + "\""
         public = data["public"]
 
-        #converting current notebook to html format
         self.execute_shell('jupyter nbconvert --to html ' + path) 
        
         html_path = path[0:len(path)-5] + 'html'
-
+        
         self.execute_shell('gsutil mb ' + 'gs://' + self.get_bucket_name()) 
-        # self.execute_shell('jupyter rm ' + self.get_bucket_name())
 
         bucket_name = self.get_bucket_name()
         instance_name = self.get_instance_name()
@@ -43,11 +41,9 @@ class ShareNbHandler(APIHandler):
         full_gcs_path = bucket_name + '/' + instance_name + '/' + html_path
         self.execute_shell('gsutil cp ' + html_path + ' ' +  'gs://' + full_gcs_path) 
 
-        # delete the html file after it has been uploaded to GCS
-        self.execute_shell(' rm ' + html_path)
+        self.execute_shell('rm ' + html_path)
 
         sharing_link = 'https://storage.cloud.google.com/' + full_gcs_path 
-
         permission_link = 'https://console.cloud.google.com/storage/browser/_details/' + full_gcs_path 
 
         if public:
