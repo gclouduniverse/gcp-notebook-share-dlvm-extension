@@ -26,18 +26,25 @@ class ShareNbHandler(APIHandler):
     def post(self):
         data = json.loads(self.request.body.decode('utf-8'))
         path = data["notebook_path"]
+        # path = "\"" + path + "\""
         public = data["public"]
 
+        #converting current notebook to html format
         self.execute_shell('jupyter nbconvert --to html ' + path) 
        
         html_path = path[0:len(path)-5] + 'html'
 
         self.execute_shell('gsutil mb ' + 'gs://' + self.get_bucket_name()) 
+        # self.execute_shell('jupyter rm ' + self.get_bucket_name())
 
         bucket_name = self.get_bucket_name()
         instance_name = self.get_instance_name()
+
         full_gcs_path = bucket_name + '/' + instance_name + '/' + html_path
         self.execute_shell('gsutil cp ' + html_path + ' ' +  'gs://' + full_gcs_path) 
+
+        # delete the html file after it has been uploaded to GCS
+        self.execute_shell(' rm ' + html_path)
 
         sharing_link = 'https://storage.cloud.google.com/' + full_gcs_path 
 
