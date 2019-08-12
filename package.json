@@ -1,6 +1,6 @@
 {
   "name": "share_nb",
-  "version": "0.3.0",
+  "version": "0.2.0",
   "description": "Jupyter Notebook submission to GCP",
   "keywords": [
     "jupyter",

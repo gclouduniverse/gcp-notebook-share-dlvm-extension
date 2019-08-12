@@ -12,7 +12,7 @@
 
 ```bash
 INSTANCE_NAME=... # Namve of either AI Platform Notebook instance or Cloud AI Deep Learning VM
-git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git --branch v0.1.0
+git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git --branch v0.2.0
 cd gcp-notebook-share-dlvm-extension
 ./deploy.sh "${INSTANCE_NAME}"
 ```
