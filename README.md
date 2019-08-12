@@ -1,9 +1,12 @@
 # Extensions For Sharing Notebook
 
+![](./example.gif)
+
 ## Prerequisites
 
-* Cloud AI Deep Learning VM
-* AI Platform Notebook Instance
+* Cloud AI Deep Learning VM (M33+)
+* AI Platform Notebook Instance (M33+)
+* AI Platform Deep Learning Containers (M32+)
 
 ## Installation Remote
 
