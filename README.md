@@ -14,14 +14,12 @@ cd gcp-notebook-share-dlvm-extension
 ./deploy.sh "${INSTANCE_NAME}"
 ```
 
-## Installations From The AI Platform Notebooks
+## Installation From AI Platform Notebooks
 
-* Open AI Platform Notebook Jupyter Lab
+* Open AI Platform Notebook
 * Open Terminal
 * Run the following commands:
    * ```git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git```
    * ```cd gcp-notebook-share-dlvm-extension```
-   * ```sudo pip3 install .```
-   * ```sudo jupyter labextension install```
-   * ```sudo service jupyter restart```
+   * ```./install.sh```
 * Refresh browser tab
