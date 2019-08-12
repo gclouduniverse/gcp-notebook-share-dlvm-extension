@@ -42,7 +42,8 @@
     "@phosphor/widgets": "^1.6.0",
     "file-system": "^2.2.2",
     "fs-extra": "^7.0.1",
-    "typestyle": "^2.0.0"
+    "typestyle": "^2.0.0",
+    "lodash.mergewith": "^4.6.2"
   },
   "devDependencies": {
     "@types/fs-extra": "~4.0.3",
