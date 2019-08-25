@@ -1,4 +1,4 @@
-# Extensions For Sharing Notebook
+# JupyterLab Extension For Sharing Notebooks for GCP AI Platform
 
 ![](./example.gif)
 
