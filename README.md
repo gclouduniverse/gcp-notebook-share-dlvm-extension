@@ -10,9 +10,20 @@
 
 ## Installation Remote
 
+### Latest stable
+
 ```bash
 INSTANCE_NAME=... # Namve of either AI Platform Notebook instance or Cloud AI Deep Learning VM
-git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git --branch v0.2.0
+git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git --branch v0.1.1
+cd gcp-notebook-share-dlvm-extension
+./deploy.sh "${INSTANCE_NAME}"
+```
+
+### Latest unstable (master)
+
+```bash
+INSTANCE_NAME=... # Namve of either AI Platform Notebook instance or Cloud AI Deep Learning VM
+git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git
 cd gcp-notebook-share-dlvm-extension
 ./deploy.sh "${INSTANCE_NAME}"
 ```
@@ -21,8 +32,10 @@ cd gcp-notebook-share-dlvm-extension
 
 * Open AI Platform Notebook
 * Open Terminal
-* Run the following commands:
-   * ```git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git```
+* Run the following commands for cloning:
+   *  latest stable: ```git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git --branch v0.1.1```
+   * latest unstable: ```git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git```
+* Run the following commands for installing:
    * ```cd gcp-notebook-share-dlvm-extension```
    * ```./install.sh```
 * Refresh browser tab
