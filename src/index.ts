@@ -22,8 +22,8 @@ import {
 from '@phosphor/disposable';
 
 import {
-    JupyterLab,
-    JupyterLabPlugin
+    JupyterFrontEnd,
+    JupyterFrontEndPlugin
 }
 from '@jupyterlab/application';
 
@@ -56,7 +56,7 @@ from '@jupyterlab/services';
 /**
  * The plugin registration information.
  */
-const buttonPlugin: JupyterLabPlugin < void >  = {
+const buttonPlugin: JupyterFrontEndPlugin < void >  = {
     activate: activateButton,
     id: 'share:button',
     autoStart: true,
@@ -171,7 +171,7 @@ export const iconStyle = style({
     }
 }
 
-function activateButton(app: JupyterLab) {
+function activateButton(app: JupyterFrontEnd) {
     console.log('JupyterLab share button extension is activated!');
     app.docRegistry.addWidgetExtension('Notebook', new ButtonExtension());
 }
