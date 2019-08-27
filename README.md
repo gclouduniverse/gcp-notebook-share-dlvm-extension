@@ -8,7 +8,7 @@
 * AI Platform Notebook Instance (M33+)
 * AI Platform Deep Learning Containers (M32+)
 
-## Installation Remote
+## Installation From AI Platform Notebooks
 
 This extension includes both a notebook server extension and a lab extension. In order to use it, you must enable both of them.
 
@@ -32,14 +32,22 @@ sudo service jupyter restart
 
 and refresh the browser tab.
 
-## Installation From AI Platform Notebooks
+## Installation Remote
 
-* Open AI Platform Notebook
-* Open Terminal
-* Run the following commands for cloning:
-   *  latest stable: ```git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git --branch v0.1.1```
-   * latest unstable: ```git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git```
-* Run the following commands for installing:
-   * ```cd gcp-notebook-share-dlvm-extension```
-   * ```./install.sh```
-* Refresh browser tab
+### Latest stable
+
+```bash
+INSTANCE_NAME=... # Namve of either AI Platform Notebook instance or Cloud AI Deep Learning VM
+git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git --branch v0.1.1
+cd gcp-notebook-share-dlvm-extension
+./deploy.sh "${INSTANCE_NAME}"
+```
+
+### Latest unstable (master)
+
+```bash
+INSTANCE_NAME=... # Namve of either AI Platform Notebook instance or Cloud AI Deep Learning VM
+git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git
+cd gcp-notebook-share-dlvm-extension
+./deploy.sh "${INSTANCE_NAME}"
+```
