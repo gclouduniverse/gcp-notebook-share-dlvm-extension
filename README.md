@@ -10,23 +10,27 @@
 
 ## Installation Remote
 
-### Latest stable
+This extension includes both a notebook server extension and a lab extension. In order to use it, you must enable both of them.
+
+To install the server extension, run the following in your terminal:
 
 ```bash
-INSTANCE_NAME=... # Namve of either AI Platform Notebook instance or Cloud AI Deep Learning VM
-git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git --branch v0.1.1
-cd gcp-notebook-share-dlvm-extension
-./deploy.sh "${INSTANCE_NAME}"
+sudo pip3 install share_nb
 ```
 
-### Latest unstable (master)
+To install the lab extension, run:
 
 ```bash
-INSTANCE_NAME=... # Namve of either AI Platform Notebook instance or Cloud AI Deep Learning VM
-git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git
-cd gcp-notebook-share-dlvm-extension
-./deploy.sh "${INSTANCE_NAME}"
+sudo jupyter labextension install share_nb
 ```
+
+Don't forget to restart jupyter:
+
+```bash
+sudo service jupyter restart
+```
+
+and refresh the browser tab.
 
 ## Installation From AI Platform Notebooks
 
