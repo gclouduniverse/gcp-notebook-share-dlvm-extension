@@ -38,5 +38,5 @@ and refresh the browser tab.
 INSTANCE_NAME=... # Namve of either AI Platform Notebook instance or Cloud AI Deep Learning VM
 git clone https://github.com/gclouduniverse/gcp-notebook-share-dlvm-extension.git
 cd gcp-notebook-share-dlvm-extension
-./deploy.sh "${INSTANCE_NAME}"
+./deploy.sh INSTANCE_NAME
 ```
