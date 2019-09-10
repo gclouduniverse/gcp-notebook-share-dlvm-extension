@@ -106,6 +106,12 @@ export const iconStyle = style({
             const result = firstDialog.launch();
             result.then(result => {
                 if (result.button.label == 'Private') {
+                    const middialog = new Dialog({
+                        title: 'Please, wait...',
+                        buttons: []
+                    });
+                    middialog.launch();
+                    
                     let fullRequest = {
                         method: 'POST',
                         body: JSON.stringify({
@@ -126,12 +132,19 @@ export const iconStyle = style({
                                         Dialog.okButton()
                                     ]
                                 });
+                            middialog.reject();
                             dialog.launch();
                         })
                     });
                 }
 
                 if (result.button.label == 'Public') {
+                    const middialog = new Dialog({
+                        title: 'Please, wait...',
+                        buttons: []
+                    });
+                    middialog.launch();
+                    
                     let fullRequest = {
                         method: 'POST',
                         body: JSON.stringify({
@@ -152,6 +165,7 @@ export const iconStyle = style({
                                         Dialog.okButton()
                                     ]
                                 });
+                            middialog.reject();
                             dialog.launch();
                         })
                     });
@@ -196,9 +210,11 @@ class ShareNotebookResultsForm extends Widget {
         sharingText.textContent = 'Link to the notebook';
         sharingText.href = sharingLink;
         sharingText.target = '_blank';
+        sharingText.style.color = '#106ba3';
         permissionsText.textContent = 'Adjust access permission for the link';
         permissionsText.href = permissionsLink;
         permissionsText.target = '_blank';
+        permissionsText.style.color = '#106ba3';
         node.className = 'jp-RedirectForm';
 
         node.appendChild(sharingText);
@@ -227,6 +243,7 @@ class ShareNotebookPublicResultsForm extends Widget {
         sharingText.textContent = 'Link to the notebook';
         sharingText.href = sharingLink;
         sharingText.target = '_blank';
+        sharingText.style.color = '#106ba3';
         node.className = 'jp-RedirectForm';
         node.appendChild(sharingText);
 
