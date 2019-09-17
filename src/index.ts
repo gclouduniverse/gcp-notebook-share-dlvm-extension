@@ -107,11 +107,11 @@ export const iconStyle = style({
             result.then(result => {
                 if (result.button.label == 'Private') {
                     const middialog = new Dialog({
-                        title: 'Please, wait...',
-                        buttons: []
-                    });
+                            title: 'Please, wait...',
+                            buttons: []
+                        });
                     middialog.launch();
-                    
+
                     let fullRequest = {
                         method: 'POST',
                         body: JSON.stringify({
@@ -120,31 +120,35 @@ export const iconStyle = style({
                         })
                     };
 
-                    ServerConnection.makeRequest(fullUrl, fullRequest, settings).then(response => {
-                        response.text().then(function processText(links: string) {
-                            let linksObj = JSON.parse(links);
-                            let sharingLink = linksObj["sharingLink"]
-                                let permissionsLink = linksObj["permissionsLink"]
-                                const dialog = new Dialog({
-                                    title: 'Share Notebook',
-                                    body: new ShareNotebookResultsForm(sharingLink, permissionsLink),
-                                    buttons: [
-                                        Dialog.okButton()
-                                    ]
-                                });
-                            middialog.reject();
-                            dialog.launch();
-                        })
+                    context.save().then(() => {
+                        ServerConnection.makeRequest(fullUrl, fullRequest, settings).then(response => {
+                            response.text().then(function processText(links: string) {
+                                let linksObj = JSON.parse(links);
+                                let sharingLink = linksObj["sharingLink"]
+                                    let permissionsLink = linksObj["permissionsLink"]
+                                    const dialog = new Dialog({
+                                        title: 'Share Notebook',
+                                        body: new ShareNotebookResultsForm(sharingLink, permissionsLink),
+                                        buttons: [
+                                            Dialog.okButton()
+                                        ]
+                                    });
+                                middialog.reject();
+                                dialog.launch();
+                            })
+                        });
+
                     });
+
                 }
 
                 if (result.button.label == 'Public') {
                     const middialog = new Dialog({
-                        title: 'Please, wait...',
-                        buttons: []
-                    });
+                            title: 'Please, wait...',
+                            buttons: []
+                        });
                     middialog.launch();
-                    
+
                     let fullRequest = {
                         method: 'POST',
                         body: JSON.stringify({
@@ -152,22 +156,23 @@ export const iconStyle = style({
                             "public": true
                         })
                     };
+                    context.save().then(() => {
+                        ServerConnection.makeRequest(fullUrl, fullRequest, settings).then(response => {
+                            response.text().then(function processText(links: string) {
+                                let linksObj = JSON.parse(links);
+                                let sharingLink = linksObj["sharingLink"]
 
-                    ServerConnection.makeRequest(fullUrl, fullRequest, settings).then(response => {
-                        response.text().then(function processText(links: string) {
-                            let linksObj = JSON.parse(links);
-                            let sharingLink = linksObj["sharingLink"]
-
-                                const dialog = new Dialog({
-                                    title: 'Share Notebook',
-                                    body: new ShareNotebookPublicResultsForm(sharingLink),
-                                    buttons: [
-                                        Dialog.okButton()
-                                    ]
-                                });
-                            middialog.reject();
-                            dialog.launch();
-                        })
+                                    const dialog = new Dialog({
+                                        title: 'Share Notebook',
+                                        body: new ShareNotebookPublicResultsForm(sharingLink),
+                                        buttons: [
+                                            Dialog.okButton()
+                                        ]
+                                    });
+                                middialog.reject();
+                                dialog.launch();
+                            })
+                        });
                     });
                 }
             });
