@@ -6,7 +6,7 @@ import tornado.gen as gen
 from notebook.utils import url_path_join, url_escape
 from notebook.base.handlers import APIHandler
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 GET_PROJECT_NAME_COMMAND = "curl http://metadata.google.internal/computeMetadata/v1/project/project-id -H \"Metadata-Flavor: Google\""
 GET_INSTANCE_NAME_COMMAND = "curl http://metadata.google.internal/computeMetadata/v1/instance/name -H \"Metadata-Flavor: Google\""
