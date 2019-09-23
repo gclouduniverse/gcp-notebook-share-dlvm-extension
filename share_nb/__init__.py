@@ -38,7 +38,7 @@ class ShareNbHandler(APIHandler):
         bucket_name = self.get_bucket_name()
         instance_name = self.get_instance_name()
 
-        full_gcs_path = bucket_name + '/' + instance_name + '/' + html_path
+        full_gcs_path = bucket_name + '/' + instance_name + html_path
         self.execute_shell('gsutil cp ' + html_path + ' ' +  'gs://' + full_gcs_path) 
 
         self.execute_shell('rm ' + html_path)
