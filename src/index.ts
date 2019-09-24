@@ -82,16 +82,14 @@ export const iconStyle = style({
      * Create a new extension object.
      */
     createNew(panel: NotebookPanel, context: DocumentRegistry.IContext < INotebookModel > ): IDisposable {
-
         let callback = () => {
             let notebook_path = panel.context.contentsModel.path;
             let full_notebook_path = PageConfig.getOption('serverRoot') + "/" + notebook_path
-
                 let settings = ServerConnection.makeSettings();
             let fullUrl = URLExt.join(settings.baseUrl, "share_nb");
             const firstDialog = new Dialog({
                     title: 'Share Notebook',
-                    body: 'What type of link do you want?',
+                    body: new ShareNotebookFirstDialogForm(),
                     buttons: [
                         Dialog.cancelButton(),
                         Dialog.createButton({
@@ -102,7 +100,6 @@ export const iconStyle = style({
                         })
                     ]
                 });
-
             const result = firstDialog.launch();
             result.then(result => {
                 if (result.button.label == 'Private') {
@@ -111,7 +108,6 @@ export const iconStyle = style({
                             buttons: []
                         });
                     middialog.launch();
-
                     let fullRequest = {
                         method: 'POST',
                         body: JSON.stringify({
@@ -119,7 +115,6 @@ export const iconStyle = style({
                             "public": false
                         })
                     };
-
                     context.save().then(() => {
                         ServerConnection.makeRequest(fullUrl, fullRequest, settings).then(response => {
                             response.text().then(function processText(links: string) {
@@ -141,14 +136,12 @@ export const iconStyle = style({
                     });
 
                 }
-
                 if (result.button.label == 'Public') {
                     const middialog = new Dialog({
                             title: 'Please, wait...',
                             buttons: []
                         });
                     middialog.launch();
-
                     let fullRequest = {
                         method: 'POST',
                         body: JSON.stringify({
@@ -161,7 +154,6 @@ export const iconStyle = style({
                             response.text().then(function processText(links: string) {
                                 let linksObj = JSON.parse(links);
                                 let sharingLink = linksObj["sharingLink"]
-
                                     const dialog = new Dialog({
                                         title: 'Share Notebook',
                                         body: new ShareNotebookPublicResultsForm(sharingLink),
@@ -211,7 +203,6 @@ class ShareNotebookResultsForm extends Widget {
         const br = document.createElement('br');
         const sharingText = document.createElement('a');
         const permissionsText = document.createElement('a');
-
         sharingText.textContent = 'Link to the notebook';
         sharingText.href = sharingLink;
         sharingText.target = '_blank';
@@ -221,11 +212,9 @@ class ShareNotebookResultsForm extends Widget {
         permissionsText.target = '_blank';
         permissionsText.style.color = '#106ba3';
         node.className = 'jp-RedirectForm';
-
         node.appendChild(sharingText);
         node.appendChild(br);
         node.appendChild(permissionsText);
-
         return node;
     }
 }
@@ -244,14 +233,39 @@ class ShareNotebookPublicResultsForm extends Widget {
     private static createPublicFormNode(sharingLink: string): HTMLElement {
         const node = document.createElement('div');
         const sharingText = document.createElement('a');
-
         sharingText.textContent = 'Link to the notebook';
         sharingText.href = sharingLink;
         sharingText.target = '_blank';
         sharingText.style.color = '#106ba3';
         node.className = 'jp-RedirectForm';
         node.appendChild(sharingText);
+        return node;
+    }
+}
 
+class ShareNotebookFirstDialogForm extends Widget {
+
+    /**
+     * Create a redirect form.
+     */
+    constructor() {
+        super({
+            node: ShareNotebookFirstDialogForm.createFirstDialogNode()
+        });
+    }
+
+    private static createFirstDialogNode(): HTMLElement {
+        const node = document.createElement('div');        
+        const dialogText = document.createElement('p');
+        const dialogLink = document.createElement('a');
+        dialogText.textContent = 'What type of link do you want?';
+        dialogLink.textContent = 'Details';
+        dialogLink.href = 'http://nbshare.cloud';
+        dialogLink.target = '_blank';
+        dialogLink.style.color = '#106ba3';
+        node.className = 'jp-RedirectForm';
+        node.appendChild(dialogText);     
+        node.appendChild(dialogLink);
         return node;
     }
 }
