@@ -203,6 +203,7 @@ class ShareNotebookResultsForm extends Widget {
         const br = document.createElement('br');
         const sharingText = document.createElement('a');
         const permissionsText = document.createElement('a');
+		const copyButton = document.createElement('input');
         sharingText.textContent = 'Link to the notebook';
         sharingText.href = sharingLink;
         sharingText.target = '_blank';
@@ -211,10 +212,26 @@ class ShareNotebookResultsForm extends Widget {
         permissionsText.href = permissionsLink;
         permissionsText.target = '_blank';
         permissionsText.style.color = '#106ba3';
+		copyButton.type = "button";
+        copyButton.value = "Copy Link";
+        copyButton.onclick = () => {
+            const selBox = document.createElement('textarea');
+            selBox.style.position = 'fixed';
+            selBox.style.left = '0';
+            selBox.style.top = '0';
+            selBox.style.opacity = '0';
+            selBox.value = sharingLink;
+            node.appendChild(selBox);
+            selBox.focus();
+            selBox.select();
+            document.execCommand('copy');
+            node.removeChild(selBox);
+        };
         node.className = 'jp-RedirectForm';
         node.appendChild(sharingText);
         node.appendChild(br);
         node.appendChild(permissionsText);
+		node.appendChild(copyButton);
         return node;
     }
 }
@@ -233,12 +250,29 @@ class ShareNotebookPublicResultsForm extends Widget {
     private static createPublicFormNode(sharingLink: string): HTMLElement {
         const node = document.createElement('div');
         const sharingText = document.createElement('a');
+        const copyButton = document.createElement('input');
         sharingText.textContent = 'Link to the notebook';
         sharingText.href = sharingLink;
         sharingText.target = '_blank';
         sharingText.style.color = '#106ba3';
+        copyButton.type = "button";
+        copyButton.value = "Copy Link";
+        copyButton.onclick = () => {
+            const selBox = document.createElement('textarea');
+            selBox.style.position = 'fixed';
+            selBox.style.left = '0';
+            selBox.style.top = '0';
+            selBox.style.opacity = '0';
+            selBox.value = sharingLink;
+            node.appendChild(selBox);
+            selBox.focus();
+            selBox.select();
+            document.execCommand('copy');
+            node.removeChild(selBox);
+        };
         node.className = 'jp-RedirectForm';
         node.appendChild(sharingText);
+        node.appendChild(copyButton);
         return node;
     }
 }
@@ -255,7 +289,7 @@ class ShareNotebookFirstDialogForm extends Widget {
     }
 
     private static createFirstDialogNode(): HTMLElement {
-        const node = document.createElement('div');        
+        const node = document.createElement('div');
         const dialogText = document.createElement('p');
         const dialogLink = document.createElement('a');
         dialogText.textContent = 'What type of link do you want?';
@@ -264,7 +298,7 @@ class ShareNotebookFirstDialogForm extends Widget {
         dialogLink.target = '_blank';
         dialogLink.style.color = '#106ba3';
         node.className = 'jp-RedirectForm';
-        node.appendChild(dialogText);     
+        node.appendChild(dialogText);
         node.appendChild(dialogLink);
         return node;
     }
