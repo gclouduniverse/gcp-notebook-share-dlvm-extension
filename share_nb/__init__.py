@@ -39,10 +39,13 @@ class ShareNbHandler(APIHandler):
         instance_name = self.get_instance_name()
 
         full_gcs_path = bucket_name + '/' + instance_name + html_path
+        
+        self.execute_shell('gsutil acl get gs://' + full_gcs_path + '> acl.txt')
         self.execute_shell('gsutil cp ' + html_path + ' ' +  'gs://' + full_gcs_path) 
+        self.execute_shell('gsutil acl set acl.txt gs://' + full_gcs_path)
 
         self.execute_shell('rm ' + html_path)
-
+        self.execute_shell('rm acl.txt') 
         sharing_link = 'https://storage.cloud.google.com/' + full_gcs_path 
         permission_link = 'https://console.cloud.google.com/storage/browser/_details/' + full_gcs_path 
 
