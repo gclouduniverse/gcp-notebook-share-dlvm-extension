@@ -213,7 +213,7 @@ class ShareNotebookResultsForm extends Widget {
         permissionsText.target = '_blank';
         permissionsText.style.color = '#106ba3';
         copyButton.type = "button";
-        copyButton.value = "Copy Link";
+        copyButton.value = "Copy Notebook Link";
         copyButton.onclick = () => {
             const selBox = document.createElement('textarea');
             selBox.style.position = 'fixed';
@@ -256,7 +256,7 @@ class ShareNotebookPublicResultsForm extends Widget {
         sharingText.target = '_blank';
         sharingText.style.color = '#106ba3';
         copyButton.type = "button";
-        copyButton.value = "Copy Link";
+        copyButton.value = "Copy Notebook Link";
         copyButton.onclick = () => {
             const selBox = document.createElement('textarea');
             selBox.style.position = 'fixed';
